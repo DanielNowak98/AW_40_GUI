@@ -28,10 +28,6 @@ Date = ""
 Kilometerstand = ""
 
 
-
-
-
-
 def change_symptom_value(i,di):
     '''Checkfunktion. Diese Funktion stellt den Dictionary-Eintrag von "No" auf "Yes".'''
     if di[i] == False:
