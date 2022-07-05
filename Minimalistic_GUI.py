@@ -28,53 +28,6 @@ Kilometerstand = ""
 Date = ""
 
 
-def change_symptom_value(i,di):
-    '''Checkfunktion. Diese Funktion stellt den Dictionary-Eintrag von "No" auf "Yes".'''
-    if di[i] == False:
-       di [i] = True
-    return di
-
-
-def symptome(root):
-    """
-    Öffnet ein neues Fenster, in dem die Symptome zur Checkbox Auswahl liegen.
-    """
-    global di
-
-    window = tk.Toplevel(root)
-    window.title("Symptome")
-    window.geometry("400x400")
-    root.eval(f'tk::PlaceWindow {str(window)} center')
-    img = ImageTk.PhotoImage(file=str(pathlib.Path(__file__).parent.resolve()) + PROLAB_ICON)
-    window.tk.call('wm', 'iconphoto', root._w, img)
-
-    symptome = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-
-    # Symtpome innerhalb des dictionarys werden auf "No" gesetzt.
-    for i in symptome:
-        di[i] = False
-
-    # 12 Checkboxen werden in 3 Spalten gesetzt
-    for i in range(0, 12):
-        if i % 3 == 0:
-            checkbox = tk.Checkbutton(window, text=symptome[i], variable=i,
-                                      command=lambda i=symptome[i]: change_symptom_value(i, di))
-            checkbox.grid(row=i // 3, column=0)
-        elif i % 3 == 1:
-            checkbox = tk.Checkbutton(window, text=symptome[i], variable=i,
-                                      command=lambda i=symptome[i]: change_symptom_value(i, di))
-            checkbox.grid(row=i // 3, column=1)
-        else:
-            checkbox = tk.Checkbutton(window, text=symptome[i], variable=i,
-                                      command=lambda i=symptome[i]: change_symptom_value(i, di))
-            checkbox.grid(row=i // 3, column=2)
-
-    # Knopf zum schließen des Fensters
-    button = tk.Button(window, text="Close", command=window.destroy)
-    button.grid(column=3, row=9)
-
-    return di
-
 
 def select_obd_file():
     """
@@ -231,7 +184,7 @@ def run_gui():
     """
     root = tk.Tk()
     root.title("AW40")
-    root.geometry("350x180")
+    root.geometry("350x160")
 
     img = ImageTk.PhotoImage(file=str(pathlib.Path(__file__).parent.resolve()) + PROLAB_ICON)
     root.tk.call('wm', 'iconphoto', root._w, img)
@@ -241,47 +194,41 @@ def run_gui():
     img = image.resize((80, 80))
     my_img = ImageTk.PhotoImage(img)
     label = tk.Label(root, image=my_img)
-    label.grid(column=3, row=3, rowspan=3, padx=1, columnspan=2)
+    label.grid(column=3, row=0, rowspan=6, padx=1,pady=4, columnspan=3)
 
     label = tk.Label(root, text="Werkstattname")
-    label.grid(column=0, row=0, sticky="nsew")
+    label.grid(column=0, row=0, pady=2, sticky="nsew")
 
     Werkstattname = tk.StringVar()
     name = tk.Entry(root, textvariable=Werkstattname)
-    name.grid(column=1, row=0, sticky="nsew")
+    name.grid(column=1, row=0,pady=2, sticky="nsew")
 
     label = tk.Label(root, text="PLZ")
-    label.grid(column=0, row=2, sticky="nsew")
+    label.grid(column=0, row=2,pady=2, sticky="nsew")
 
     plz = tk.Entry(root, )
-    plz.grid(column=1, row=2, sticky="nsew")
+    plz.grid(column=1, row=2,pady=2, sticky="nsew")
 
     label = tk.Label(root, text="WerksstattID")
-    label.grid(column=0, row=3, sticky="nsew")
+    label.grid(column=0, row=3,pady=2, sticky="nsew")
 
     plz = tk.Entry(root)
-    plz.grid(column=1, row=3, sticky="nsew")
+    plz.grid(column=1, row=3,pady=2, sticky="nsew")
 
     label = tk.Label(root, text="Mitarbeiter ID")
-    label.grid(column=0, row=4, sticky="nsew")
+    label.grid(column=0, row=4,pady=2, sticky="nsew")
 
     MitarbeiterID = tk.Entry(root)
-    MitarbeiterID.grid(column=1, row=4, sticky="nsew")
-
-    label = tk.Label(root, text="Symptome")
-    label.grid(column=0, row=5, sticky="nsew")
-
-    button = tk.Button(root, text="Symptome", command=lambda: symptome(root))
-    button.grid(column=1, row=5, sticky="nsew")
+    MitarbeiterID.grid(column=1, row=4,pady=2, sticky="nsew")
 
     label = tk.Label(root, text="Messungen")
-    label.grid(column=0, row=6, sticky="nsew")
+    label.grid(column=0, row=6,pady=2, sticky="nsew")
 
     button = tk.Button(root, text="Messungen", command=lambda: Messungen(root))
-    button.grid(column=1, row=6, sticky="nsew")
+    button.grid(column=1, row=6,pady=2, sticky="nsew")
 
     button = tk.Button(root, text="Speichern und beenden", command=lambda: data_to_json(root, name, plz, MitarbeiterID))
-    button.grid(column=3, row=9, sticky="nsew")
+    button.grid(column=3, sticky="s")
 
     root.mainloop()
 
